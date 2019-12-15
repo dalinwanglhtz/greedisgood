@@ -23,7 +23,9 @@ public class Greed {
 		Iterator it = numbers.entrySet().iterator();
 		while(it.hasNext()) {
 			Map.Entry<Integer, Integer> elem = (Entry<Integer, Integer>) it.next();
-			
+			if(elem.getKey() == 1 && elem.getValue() >= 3) {
+				total += 1000;
+			}
 		}
 		
 		int numOne = (int) Arrays.stream(dice).filter(x->x==1).count();
