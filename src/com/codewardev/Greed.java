@@ -3,34 +3,60 @@ package com.codewardev;
 // https://www.codewars.com/kata/greed-is-good/train/java
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class Greed {
 
 	public static int greedy(int[] dice) {
 		int total=0;
-		Map<Integer, Integer> numbers = new HashMap<Integer, Integer>();
-		for(int x: dice) {
-			if(numbers.containsKey(x)) {
-				numbers.put(x, numbers.get(x)+1);
-			} else {
-				numbers.put(x, 1);
-			}
-		}
-		Iterator it = numbers.entrySet().iterator();
-		while(it.hasNext()) {
-			Map.Entry<Integer, Integer> elem = (Entry<Integer, Integer>) it.next();
-			if(elem.getKey() == 1 && elem.getValue() >= 3) {
-				total += 1000;
-			}
-		}
-		
-		int numOne = (int) Arrays.stream(dice).filter(x->x==1).count();
 
-		System.out.println("Num 1s: "+numOne);
+		dice = Arrays.stream(dice).sorted().toArray();
+
+		int count=0;
+		for(int i=0; i<dice.length; i++) {
+			if(i!=0 && dice[i]==dice[i-1]) {
+				count++;
+			}
+			
+			if(i!=0 && dice[i]!=dice[i-1]){
+				count = 0;
+			}
+			
+			if(count == 2) {
+				if(dice[i] == 1) {
+					total -= 200;
+					total += 1000;
+				} else
+				if(dice[i] == 2) {
+					total += 200;
+				} else
+				if(dice[i] == 3) {
+					total += 300;
+				} else
+				if(dice[i] == 4) {
+					total += 400;
+				} else
+				if(dice[i] == 5) {
+					total -= 100;
+					total += 500;
+				} else
+				if(dice[i] == 6) {
+					total += 600;
+				}
+				if(i+1 != dice.length && dice[i] == dice[i+1]) {
+					count = -1;
+				} else {
+					count = 0;
+				}
+			} else
+			if(count < 2 && dice[i] == 1) {
+				total += 100;
+			} else
+			if(count < 2 && dice[i] == 5) {
+				total += 50;
+			}
+			
+		}
+
 		return total;
 	}
 
