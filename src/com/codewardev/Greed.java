@@ -42,11 +42,7 @@ public class Greed {
 				if(dice[i] == 6) {
 					total += 600;
 				}
-				if(i+1 != dice.length && dice[i] == dice[i+1]) {
-					count = -1;
-				} else {
-					count = 0;
-				}
+				count = i+1 != dice.length && dice[i] == dice[i+1] ? -1:0;
 			} else
 			if(count < 2 && dice[i] == 1) {
 				total += 100;
